@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 import time
 load_dotenv()
+os.environ["GOOGLE_API_KEY"] = "AIzaSyDNaarHmdVPnRUyyJeDDzAkvGhLD4RomOQ"
 os.environ["GEMINI_API_KEY"] = "AIzaSyDNaarHmdVPnRUyyJeDDzAkvGhLD4RomOQ"
 from dotenv import load_dotenv
 from langchain.prompts import ChatPromptTemplate
@@ -38,5 +39,6 @@ prompt = chat_template.invoke({'chat':text})
 
 result = model.invoke(prompt)
 print(result.content)
+
 
 time.sleep(15) 
