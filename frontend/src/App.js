@@ -5,7 +5,7 @@ import "./App.css";
 function App() {
   return (
     <div className="App">
-      <h1>🎓 AI Buddy</h1>
+      <h1>🎓 AI Buddy a Chatbot</h1>
       <ChatBox />
     </div>
   );
