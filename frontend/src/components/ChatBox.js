@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 const ChatBox = () => {
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
@@ -9,7 +11,7 @@ const ChatBox = () => {
     setLoading(true);
     setResponse("");
     try {
-      const res = await fetch("http://localhost:5000/ask", {
+      const res = await fetch(`${API_BASE}/ask`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

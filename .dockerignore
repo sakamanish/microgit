@@ -1,0 +1,22 @@
+# Exclude VCS and OS clutter
+.git
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+frontend/node_modules/
+frontend/build/
+
+# Python
+__pycache__/
+backend/__pycache__/
+*.pyc
+
+# Env files
+.env
+backend/.env
+
+# Logs
+*.log
+logs/
