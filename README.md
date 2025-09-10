@@ -139,8 +139,8 @@ Frontend (Static Site):
 
 ## Live URLs and Images
 - Docker Images (Docker Hub):
-  - Backend: `sakamanish/ai-study-buddy-backend`
-  - Frontend: `sakamanish/ai-study-buddy-frontend`
+  - Backend: `[sakamanish/ai-study-buddy-backend](https://hub.docker.com/repository/docker/sakamanish/ai-study-buddy-frontend/general)`
+  - Frontend: `[sakamanish/ai-study-buddy-frontend](https://hub.docker.com/repository/docker/sakamanish/ai-study-buddy-backend/general)`
 - Deployed Frontend (Render):
   - [https://ai-study-buddy-frontend-ylvm.onrender.com/](https://ai-study-buddy-frontend-ylvm.onrender.com/)
 - Deployed Backend (Render):
