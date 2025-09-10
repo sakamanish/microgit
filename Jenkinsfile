@@ -16,17 +16,18 @@ pipeline {
       }
     }
 
-    stage('Setup Node and Python') {
+    stage('Show Versions') {
       steps {
-        sh 'node -v || true'
-        sh 'python --version || true'
+        bat 'node -v || ver'
+        bat 'python --version || ver'
+        bat 'docker version'
       }
     }
 
     stage('Install Frontend Deps') {
       steps {
         dir('frontend') {
-          sh 'npm ci --no-audit --no-fund'
+          bat 'npm ci --no-audit --no-fund'
         }
       }
     }
@@ -34,7 +35,7 @@ pipeline {
     stage('Build Frontend') {
       steps {
         dir('frontend') {
-          sh 'npm run build'
+          bat 'npm run build'
         }
       }
       post {
@@ -47,42 +48,46 @@ pipeline {
     stage('Install Backend Deps') {
       steps {
         dir('backend') {
-          sh 'python -m pip install --upgrade pip'
-          sh 'pip install -r requirements.txt'
+          bat 'python -m pip install --upgrade pip'
+          bat 'pip install -r requirements.txt'
         }
       }
     }
 
-    stage('Unit Tests (placeholder)') {
+    stage('Docker Build (Local)') {
       steps {
-        echo 'Add your tests here'
+        bat "docker build -t %BACKEND_IMAGE%:%IMAGE_TAG% -f backend/Dockerfile ."
+        bat "docker build -t %FRONTEND_IMAGE%:%IMAGE_TAG% -f frontend/Dockerfile ."
       }
     }
 
-    stage('Docker Build') {
+    stage('Docker Run (Local)') {
       steps {
-        script {
-          sh "docker build -t ${BACKEND_IMAGE}:${IMAGE_TAG} -f backend/Dockerfile ."
-          sh "docker build -t ${FRONTEND_IMAGE}:${IMAGE_TAG} -f frontend/Dockerfile ."
-        }
+        // Stop and remove if already running
+        bat 'docker rm -f ai-study-backend 2>NUL || ver >NUL'
+        bat 'docker rm -f ai-study-frontend 2>NUL || ver >NUL'
+        // Run backend (expects backend\\.env to exist with GEMINI_API_KEY)
+        bat 'docker run -d --name ai-study-backend -p 5000:5000 --env-file backend\\.env %BACKEND_IMAGE%:%IMAGE_TAG%'
+        // Run frontend on port 3000
+        bat 'docker run -d --name ai-study-frontend -p 3000:80 %FRONTEND_IMAGE%:%IMAGE_TAG%'
       }
     }
 
-    stage('Docker Push') {
+    stage('Docker Push (optional)') {
       when {
         expression { return env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'master' }
       }
       steps {
-        sh 'echo "$DOCKERHUB_CREDENTIALS_PSW" | docker login -u "$DOCKERHUB_CREDENTIALS_USR" --password-stdin'
-        sh "docker push ${BACKEND_IMAGE}:${IMAGE_TAG}"
-        sh "docker push ${FRONTEND_IMAGE}:${IMAGE_TAG}"
+        bat 'echo %DOCKERHUB_CREDENTIALS_PSW% | docker login -u %DOCKERHUB_CREDENTIALS_USR% --password-stdin'
+        bat 'docker push %BACKEND_IMAGE%:%IMAGE_TAG%'
+        bat 'docker push %FRONTEND_IMAGE%:%IMAGE_TAG%'
       }
     }
   }
 
   post {
     always {
-      cleanWs()
+      echo 'Pipeline finished.'
     }
   }
 }
