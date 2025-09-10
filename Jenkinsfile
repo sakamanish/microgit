@@ -3,7 +3,7 @@ pipeline {
 
   environment {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
-    DOCKERHUB_USERNAME = "your-dockerhub-username"
+    DOCKERHUB_USERNAME = "sakamanish"
     BACKEND_IMAGE = "${DOCKERHUB_USERNAME}/ai-study-buddy-backend"
     FRONTEND_IMAGE = "${DOCKERHUB_USERNAME}/ai-study-buddy-frontend"
     IMAGE_TAG = "${env.BUILD_NUMBER}"
