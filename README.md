@@ -137,6 +137,15 @@ Frontend (Static Site):
 5) Environment Variable: `REACT_APP_API_URL=https://your-backend.onrender.com`
 6) Deploy → static site URL becomes your frontend.
 
+## Live URLs and Images
+- Docker Images (Docker Hub):
+  - Backend: `sakamanish/ai-study-buddy-backend`
+  - Frontend: `sakamanish/ai-study-buddy-frontend`
+- Deployed Frontend (Render):
+  - [https://ai-study-buddy-frontend-ylvm.onrender.com/](https://ai-study-buddy-frontend-ylvm.onrender.com/)
+- Deployed Backend (Render):
+  - Set this to your actual Render Web Service URL (e.g., `https://your-backend.onrender.com`).
+
 ## Troubleshooting
 - Node 22 + CRA 5 issues: use Node 18/20 or update deps.
 - CORS: enabled via `flask-cors`. Lock down origins in production if needed.
